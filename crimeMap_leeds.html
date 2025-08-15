@@ -1,84 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <title>Crime Map</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- link to the Leaflet stylesheet-->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
+    />
     <!-- link to the Leaflet JavaScript library-->
     <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
     <!-- link to the Leaflet heat map element-->
     <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
     <script type="text/javascript" src="crimeData.js"></script>
     <link rel="stylesheet" href="style.css" />
-</head>
+  </head>
 
-<body onload=showmap()>
+  <body onload="showmap()">
     <!-- this is the header-->
+    <div class="test1">
+      <h1>222</h1>
+      <h1>333</h1>
+      <h1>444</h1>
+    </div>
     <div id="header">
-        <h1>Crime Map Of Leeds</h1>
+      <h1>Crime Map Of Leeds</h1>
     </div>
     <!-- this is the introduction and information-->
     <div class="mapInfo">
-        <h2>How to Use This Crime Map</h2>
-        <p>1.select the Crime Type: Use the dropdown menu labeled "Choose crime type" to explore what you want</p>
-        <p>2.click "show" button to display the crime incidents of the selected type as markers on the map. Each marker
-            includes a short description with the location and outcome of the incident.</p>
-        <p>3.click "Generate Heat Map" button to visualize the intensity of crime distribution.</p>
-        <p>4.Click the "Clean" button to reset all element</p>
-        <p>5."Number of this type of crime" for showing the count of crime </p>
-        <h2>Why this map is important for leeds</h2>
-        <p>This map illustrates the spatial distribution of various crime types across the city of Leeds. Apart from
-            identifying the exact locations where this type of crime occurred during the given month, We can also use
-            the existing coordinates to generate separate heatmaps for different types of crimes, allowing us to
-            further understand the crime rate of each specific type within smaller areas.
-        <p>This map helps improve public safety by showing crime hotspots. It’s especially useful for women and others
-            to choose safer routes and avoid high-risk areas. For the police, this map helps deploy officers more
-            effectively and ensures community safety by identifying
-            areas with higher crime rates.</p>
-        <p>From a socio-economic perspective, this map provides insights into whether a region is poor, as crime rates
-            are often correlated with poverty. Furthermore, from an urban planning standpoint, the map could visualize
-            crime data in past years or months, which could provide valuable
-            feedback for city designers. It helps designers identify areas where certain building or space
-            designs may
-            lead to higher crime rates, so they can make a improvement.</p>
-        <p> Data source: From
-            <a href="https://data.police.uk/data/" target="_blank">https://data.police.uk/data/</a>,
-            using CSV files for the West Yorkshire area in February 2025.
-        </p>
+      <h2>How to Use This Crime Map</h2>
+      <p>
+        1.select the Crime Type: Use the dropdown menu labeled "Choose crime
+        type" to explore what you want
+      </p>
+      <p>
+        2.click "show" button to display the crime incidents of the selected
+        type as markers on the map. Each marker includes a short description
+        with the location and outcome of the incident.
+      </p>
+      <p>
+        3.click "Generate Heat Map" button to visualize the intensity of crime
+        distribution.
+      </p>
+      <p>4.Click the "Clean" button to reset all element</p>
+      <p>5."Number of this type of crime" for showing the count of crime</p>
+      <h2>Why this map is important for leeds</h2>
+      <p>
+        This map illustrates the spatial distribution of various crime types
+        across the city of Leeds. Apart from identifying the exact locations
+        where this type of crime occurred during the given month, We can also
+        use the existing coordinates to generate separate heatmaps for different
+        types of crimes, allowing us to further understand the crime rate of
+        each specific type within smaller areas.
+      </p>
 
-        <p class="name">created by: HXYQAQ<br>more info plz contact:xxxxiaoyi97@gmail.com</p>
+      <p>
+        This map helps improve public safety by showing crime hotspots. It’s
+        especially useful for women and others to choose safer routes and avoid
+        high-risk areas. For the police, this map helps deploy officers more
+        effectively and ensures community safety by identifying areas with
+        higher crime rates.
+      </p>
+      <p>
+        From a socio-economic perspective, this map provides insights into
+        whether a region is poor, as crime rates are often correlated with
+        poverty. Furthermore, from an urban planning standpoint, the map could
+        visualize crime data in past years or months, which could provide
+        valuable feedback for city designers. It helps designers identify areas
+        where certain building or space designs may lead to higher crime rates,
+        so they can make a improvement.
+      </p>
+      <p>
+        Data source: From
+        <a href="https://data.police.uk/data/" target="_blank"
+          >https://data.police.uk/data/</a
+        >, using CSV files for the West Yorkshire area in February 2025.
+      </p>
+
+      <p class="name">
+        created by: HXYQAQ<br />more info plz contact:xxxxiaoyi97@gmail.com
+      </p>
     </div>
     <!-- create a selector for crime type and three button for execute relevant function-->
     <div class="choose">
-        <label for="crimeSelector">Choose crime type:</label>
-        <select id="crimeSelector">
-            <option value="Anti-social behaviour">Anti-social behaviour</option>
-            <option value="Bicycle theft">Bicycle theft</option>
-            <option value="Burglary">Burglary</option>
-            <option value="Criminal damage and arson">Criminal damage and arson</option>
-            <option value="Drugs">Drugs</option>
-            <option value="Other crime">Other crime</option>
-            <option value="Public order">Public order</option>
-            <option value="Robbery">Robbery</option>
-            <option value="Shoplifting">Shoplifting</option>
-            <option value="Vehicle crime">Vehicle crime</option>
-            <option value="Violence and sexual offences">Violence and sexual offences</option>
-            <option value="Other theft">Other theft</option>
-            <option value="Theft from the person">Theft from the person</option>
-            <option value="Possession of weapons">Possession of weapons</option>
-        </select>
-        <button id="showButton">Show</button>
-        <button id="heatButton">Generate Heat Map</button>
-        <p id="crimeCountText">Number of this type of crime: 0</p>
-        <button id="cleanButton">Clean</button>
+      <label for="crimeSelector">Choose crime type:</label>
+      <select id="crimeSelector">
+        <option value="Anti-social behaviour">Anti-social behaviour</option>
+        <option value="Bicycle theft">Bicycle theft</option>
+        <option value="Burglary">Burglary</option>
+        <option value="Criminal damage and arson">
+          Criminal damage and arson
+        </option>
+        <option value="Drugs">Drugs</option>
+        <option value="Other crime">Other crime</option>
+        <option value="Public order">Public order</option>
+        <option value="Robbery">Robbery</option>
+        <option value="Shoplifting">Shoplifting</option>
+        <option value="Vehicle crime">Vehicle crime</option>
+        <option value="Violence and sexual offences">
+          Violence and sexual offences
+        </option>
+        <option value="Other theft">Other theft</option>
+        <option value="Theft from the person">Theft from the person</option>
+        <option value="Possession of weapons">Possession of weapons</option>
+      </select>
+      <button id="showButton">Show</button>
+      <button id="heatButton">Generate Heat Map</button>
+      <p id="crimeCountText">Number of this type of crime: 0</p>
+      <button id="cleanButton">Clean</button>
     </div>
     <!-- this is the map view-->
     <div id="mapdiv"></div>
     <script type="text/javascript" src="processing.js"></script>
-
-</body>
-
+  </body>
 </html>
